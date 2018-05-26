@@ -6,16 +6,15 @@ app.router = function() {
     var root = '/';
 
     var config = function(options) {
-        this.mode = options && options.mode && options.mode == 'history' 
+        mode = options && options.mode && options.mode == 'history' 
                     && !!(history.pushState) ? 'history' : 'hash';
-        this.root = options && options.root ? '/' + this.clearSlashes(options.root) + '/' : '/';
-        this.routes = [];
+        root = options && options.root ? '/' + this.clearSlashes(options.root) + '/' : '/';
         return this;
     }
 
     var getFragment = function() {
         var fragment = '';
-        if(this.mode === 'history') {
+        if(mode === 'history') {
             fragment = this.clearSlashes(decodeURI(location.pathname + location.search));
             fragment = fragment.replace(/\?(.*)$/, '');
             fragment = this.root != '/' ? fragment.replace(this.root, '') : fragment;
@@ -23,7 +22,7 @@ app.router = function() {
             var match = window.location.href.match(/#(.*)$/);
             fragment = match ? match[1] : '';
         }
-        return this.clearSlashes(fragment);
+        return clearSlashes(fragment);
     }
 
     var clearSlashes = function(path) {
@@ -36,14 +35,14 @@ app.router = function() {
             re = '';
         }
        
-        this.routes.push({ re: re, handler: handler});
+        routes.push({ re: re, handler: handler});
         return this;
     }
 
     var remove = function(param) {
-        for(var i=0, r; i<this.routes.length, r = this.routes[i]; i++) {
+        for(var i=0, r; i<routes.length, r = routes[i]; i++) {
             if(r.handler === param || r.re.toString() === param.toString()) {
-                this.routes.splice(i, 1); 
+                routes.splice(i, 1); 
                 return this;
             }
         }
@@ -51,43 +50,44 @@ app.router = function() {
     }
 
     var flush = function() {
-        this.routes = [];
-        this.mode = null;
-        this.root = '/';
+        routes = [];
+        mode = null;
+        root = '/';
         return this;
     }
 
     var check = function(f) {
-        var fragment = f || this.getFragment();
-        for(var i=0; i<this.routes.length; i++) {
-            var match = fragment.match(this.routes[i].re);
+        var fragment = f || getFragment();        
+        for(var i=0; i<routes.length; i++) {
+            var match = fragment.match(routes[i].re);
             if(match) {
                 match.shift();
-                this.routes[i].handler.apply({}, match);
-                return this;
+                routes[i].handler.apply({}, match);               
+                return true;
             }           
         }
-        return this;
+        return false;
     }
 
     var listen = function() {
+        var interval;
         var self = this;
-        var current = self.getFragment();
+        var current = getFragment();        
         var fn = function() {
-            if(current !== self.getFragment()) {
-                current = self.getFragment();
-                self.check(current);
+            if(current !== getFragment()) {
+                current = getFragment();
+                check(current);
             }
         }
-        clearInterval(this.interval);
-        this.interval = setInterval(fn, 50);
+        clearInterval(interval);
+        interval = setInterval(fn, 50);
         return this;
     }
 
     var navigate = function(path) {
         path = path ? path : '';
-        if(this.mode === 'history') {
-            history.pushState(null, null, this.root + this.clearSlashes(path));
+        if(mode === 'history') {
+            history.pushState(null, null, this.root + clearSlashes(path));
         } else {
             window.location.href = window.location.href.replace(/#(.*)$/, '') + '#' + path;
         }

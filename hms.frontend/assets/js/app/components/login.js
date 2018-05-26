@@ -21,8 +21,9 @@ app.login = function() {
             url: app.config.getApiUrl() + 'token',
             type: 'POST',
             data: requestObj,
-            dataType: 'text',
-            success: function(response, status, jqXHR) {                
+            dataType: 'json',
+            success: function(response, status, jqXHR) {   
+                app.utility.setLoginData(response);             
                 app.router.navigate('/home');
             },
             error: function(response) {
