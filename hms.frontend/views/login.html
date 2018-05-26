@@ -1,14 +1,25 @@
-<form class="form-signin">      
-  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-  <label for="inputEmail" class="sr-only">Email address</label>
-  <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-  <label for="inputPassword" class="sr-only">Password</label>
-  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-  <div class="checkbox mb-3">
-    <label>
-      <input type="checkbox" value="remember-me"> Remember me
-    </label>
+
+  <div id="login-component" class="row justify-content-center align-items-center h-100 login">
+    <div class="col col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-3">
+      <div id="login-danger-message" class="alert alert-danger" style="display: none;">
+        Wrong username or password.
+      </div>
+      <form action="" method="POST">
+        <div class="form-group">
+          <input autofocus class="form-control form-control-lg" id="username" required placeholder="User email" type="text">
+        </div>
+        <div class="form-group">
+          <input class="form-control form-control-lg" id="password" required placeholder="Password" type="password">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary btn-lg btn-block" type="button" onclick="app.login.login()">Login <i id="login-loading" style="display: none;" class="fa fa-spinner fa-spin"></i></button>
+        </div>
+      </form>
+    </div>
   </div>
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-  <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
-</form>
+
+  <script type="text/javascript" src="assets/js/app/components/login.js"></script>
+
+  <script type="text/javascript">
+    app.login.init();
+  </script>
