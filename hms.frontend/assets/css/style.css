@@ -293,3 +293,15 @@ label.error
 {
   width: auto !important;
 }
+
+.table .subheader
+{
+  font-size: 12px;
+  font-weight: bold;  
+}
+
+.table .subheader td
+{
+  background: #FFF;
+  border-bottom: 2px solid #666;
+}

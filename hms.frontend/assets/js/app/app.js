@@ -21,11 +21,14 @@ app.main = function() {
         .add('user', function() {
             loadContent('views/user');
         })
+        .add('roomrate', function() {
+            loadContent('views/roomrate');
+        })
         .add('room', function() {
             loadContent('views/room');
-        })
+        })        
         .listen();
-
+        
         // This is only for initial load
         app.router.check(app.router.getFragment());
 
@@ -96,8 +99,9 @@ app.main = function() {
         $('a').off('click').on('click', function(e){
             if($(this).data('navigate'))
             {
-                e.preventDefault();
+                e.preventDefault();                
                 var navigateTo = $(this).data('navigate');
+                console.log(navigateTo);
                 app.router.navigate('/' + navigateTo);
             }
         });

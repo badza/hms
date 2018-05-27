@@ -1,0 +1,64 @@
+<div class="row">
+    <div class="col-md-6">
+        <h1>
+            <i class="fas fa-door-closed"></i> Room Rate Management</h1>
+    </div>
+    <div class="col-md-6">
+        <button onclick="app.roomRates.editRoomRate(0)" class="btn btn-success float-right add" href="#">
+            <i class="fas fa-plus"></i> Add New Room Rate</button>
+    </div>
+</div>
+
+<div id="room-rate-data-placeholder" class="component-content-placeholder">
+
+</div>
+
+<div class="modal fade" id="edit-room-rate-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="room-rate-form">
+                    <input type="hidden" name="room_rate_id" id="room_rate_id">
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label" for="room_id">Room</label>
+                        <div class="col-9">
+                                <select id="room_id" name="room_id" class="form-control">
+                                    </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="meal_option_id" class="col-3 col-form-label">Meal Option</label>
+                        <div class="col-9">
+                            <select id="meal_option_id" name="meal_option_id" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="price_per_adult" class="col-3 col-form-label">Price per Adult</label>
+                        <div class="col-9">
+                            <input id="price_per_adult" name="price_per_adult" placeholder="Price per Adult" type="text" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fas fa-times"></i> Close</button>
+                <button type="button" class="btn btn-primary" onclick="app.roomRates.saveRoomRate()">
+                    <i class="far fa-save"></i> Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="assets/js/app/components/room-rate.js"></script>
+
+<script type="text/javascript">
+    app.roomRates.init();
+</script>
