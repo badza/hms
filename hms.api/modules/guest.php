@@ -16,20 +16,21 @@ Flight::route('GET /guests', function(){
 });
 
 Flight::route('GET /guests/@id', function($id){
+    $data = array();
     $auth = new Auth();
     $guest = new GuestStorage();
     $token_data = $auth->is_jwt_valid($auth->getBearerToken());
 
     if($token_data[0])
     {
-        $guest = $guest->get_guest($id);
-        Flight::halt(200, json_encode($guest));
+        $data['data'] = $guest->get_guest($id);
+        Flight::halt(200, json_encode($data));
     }
 
     Flight::halt(401, 'Unauthorized');
 });
 
-Flight::route('POST /rooms', function(){
+Flight::route('POST /guests', function(){
     $auth = new Auth();
     $guest = new GuestStorage();
     $request = Flight::request();

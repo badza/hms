@@ -26,7 +26,10 @@ app.main = function() {
         })
         .add('room', function() {
             loadContent('views/room');
-        })        
+        })   
+        .add('guest', function() {
+            loadContent('views/guest');
+        })       
         .listen();
         
         // This is only for initial load

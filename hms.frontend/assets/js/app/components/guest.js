@@ -1,10 +1,10 @@
 var app = app || {};
 
-app.roomRates = function () {
+app.guest = function () {
     var page = 1;
 
     var init = function () {
-        /*$('#room-rate-form').validate({
+        /*$('#room-form').validate({
             rules: {
                 door_number: 'required',
                 capacity_adults: 'required',
@@ -17,21 +17,21 @@ app.roomRates = function () {
             }
         });*/
 
-        getRoomRates();
+        getGuests();
     }
 
-    var getRoomRates = function () {
+    var getGuests = function () {
         var html = '';
 
         $.ajax({
-            url: app.config.getApiUrl() + 'roomrates?page=' + page,
+            url: app.config.getApiUrl() + 'guests?page=' + page,
             type: 'GET',
             dataType: 'json',
             beforeSend: function (xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + app.utility.getToken()); },
-            success: function (response, status, jqXHR) {
+            success: function (response, status, jqXHR) {                
                 html += buildTableHtml(response.data);
                 html += buildPaginationHtml(response.page_count);
-                $('#room-rate-data-placeholder').html(html);
+                $('#guest-data-placeholder').html(html);
             },
             error: function (response) {
                 if (response.status == 401) {
@@ -45,9 +45,9 @@ app.roomRates = function () {
         });
     }
 
-    var getRoomRate = function (id) {
+    var getGuest = function (id) {
         return $.ajax({
-            url: app.config.getApiUrl() + 'roomrates/' + id,
+            url: app.config.getApiUrl() + 'guests/' + id,
             type: 'GET',
             dataType: 'json',
             beforeSend: function (xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + app.utility.getToken()); },
@@ -68,8 +68,6 @@ app.roomRates = function () {
 
     var buildTableHtml = function (data) {
         var html = '';
-        var current_door_number = '';
-
         html += '<table class="table table-striped">';
 
         html += '<thead class="thead-dark">';
@@ -78,19 +76,22 @@ app.roomRates = function () {
         html += '#';
         html += '</td>';
         html += '<td>';
-        html += 'Door Number';
+        html += 'Firstname';
         html += '</td>';
         html += '<td>';
-        html += 'Category';
+        html += 'Lastname';
         html += '</td>';
         html += '<td>';
-        html += 'Capacity';
+        html += 'Address';
         html += '</td>';
         html += '<td>';
-        html += 'Meal Option';
+        html += 'City';
         html += '</td>';
         html += '<td>';
-        html += 'Price per Adult';
+        html += 'Phone #';
+        html += '</td>';
+        html += '<td>';
+        html += 'Email';
         html += '</td>';
         html += '<td style="width:200px;">';
         html += 'Actions';
@@ -100,37 +101,31 @@ app.roomRates = function () {
 
         html += '<tbody>';
         for (var i = 0; i < data.length; i++) {
-            if (current_door_number != data[i].door_number) {
-                html += '<tr class="subheader">';
-                html += '<td colspan="7">';
-                html += 'Room #' + data[i].door_number;
-                html += '</td>';
-                html += '</tr>';
-                current_door_number = data[i].door_number;
-            }
-
             html += '<tr>';
             html += '<td>';
-            html += data[i].room_rate_id;
+            html += data[i].guest_id;
             html += '</td>';
             html += '<td>';
-            html += data[i].door_number;
+            html += data[i].firstname;
             html += '</td>';
             html += '<td>';
-            html += data[i].room_category;
+            html += data[i].lastname;
             html += '</td>';
             html += '<td>';
-            html += data[i].capacity;
+            html += data[i].address;
             html += '</td>';
             html += '<td>';
-            html += data[i].meal_option;
+            html += data[i].city;
             html += '</td>';
             html += '<td>';
-            html += data[i].price_per_adult;
+            html += data[i].phone_no;
+            html += '</td>';
+            html += '<td>';
+            html += data[i].email;
             html += '</td>';
             html += '<td class="actions-column remove-width">';
-            html += '<button class="btn btn-secondary" onclick="app.roomRates.editRoomRate(' + data[i].room_rate_id + ')" href="#"><i class="fas fa-pencil-alt"></i> Edit</button>';
-            html += '<button class="btn btn-secondary" onclick="app.roomRates.openDeleteModal(' + data[i].room_rate_id + ')"><i class="far fa-trash-alt"></i> Delete</button>';
+            html += '<button class="btn btn-secondary" onclick="app.guest.editGuest(' + data[i].guest_id + ')" href="#"><i class="fas fa-pencil-alt"></i> Edit</button>';
+            html += '<button class="btn btn-secondary" onclick="app.guest.openDeleteModal(' + data[i].guest_id + ')"><i class="far fa-trash-alt"></i> Delete</button>';
             html += '</td>';
             html += '</tr>';
         }
@@ -147,17 +142,17 @@ app.roomRates = function () {
         html += '<ul class="pagination">';
 
         html += '<li class="page-item ' + (page == 1 ? 'disabled' : '') + '">';
-        html += '<button class="page-link previous-page" onclick="app.roomRates.previousPage()">Previous</button>';
+        html += '<button class="page-link previous-page" onclick="app.guest.previousPage()">Previous</button>';
         html += '</li>';
 
         for (var i = 0; i < pageCount; i++) {
             html += '<li class="page-item ' + (page == i + 1 ? 'active' : '') + '">';
-            html += '<button class="page-link page" onclick="app.roomRates.goToPage(' + (i + 1) + ')">' + (i + 1) + '</button>';
+            html += '<button class="page-link page" onclick="app.guest.goToPage(' + (i + 1) + ')">' + (i + 1) + '</button>';
             html += '</li>';
         }
 
         html += '<li class="page-item ' + (page == pageCount ? 'disabled' : '') + '">';
-        html += '<button class="page-link next-page" onclick="app.roomRates.nextPage()">Next</button>';
+        html += '<button class="page-link next-page" onclick="app.guest.nextPage()">Next</button>';
         html += '</li>';
 
         html += '</ul>';
@@ -166,119 +161,105 @@ app.roomRates = function () {
         return html;
     }
 
-    var openEditModal = function (title, roomRate) {
-        $('#edit-room-rate-modal .modal-title').html(title);
-        app.utility.clearForm($('#room-rate-form'));
-        fillMealOptions(roomRate.meal_options);
-        fillRooms(roomRate.rooms);
-        console.log(roomRate.data);
-        if (roomRate.data) {
-            app.utility.formalizeObject(roomRate.data, $('#room-rate-form'));
-            $('#edit-room-rate-modal').modal('show');
+    var openEditModal = function (title, guest) {
+        $('#edit-guest-modal .modal-title').html(title);
+        app.utility.clearForm($('#guest-form'));        
+
+        if (guest.data) {
+            app.utility.formalizeObject(guest.data, $('#guest-form'));
+            $('#edit-guest-modal').modal('show');
         }
         else
-            $('#edit-room-rate-modal').modal('show');
+            $('#edit-guest-modal').modal('show');
     }
 
-    var editRoomRate = function (id) {
-        var title = id > 0 ? 'Edit Room Rate' : 'Add Room Rate';
+    var editGuest = function (id) {
+        var title = id > 0 ? 'Edit Guest' : 'Add Guest';
 
-        $.when(getRoomRate(id)).then(function (data) {
+        $.when(getGuest(id)).then(function (data) {
             openEditModal(title, data);
         });
     }
 
-    var saveRoomRate = function () {
-        var obj = app.utility.objectifyForm($('#room-rate-form'));
-        var type = obj.room_rate_id > 0 ? 'PUT' : 'POST';
-        var url = obj.room_rate_id > 0 ? app.config.getApiUrl() + 'roomrates/' + obj.room_rate_id : app.config.getApiUrl() + 'roomrates/';
-
-        if ($('#room-rate-form').valid()) {
+    var saveGuest = function()
+    {
+        var obj = app.utility.objectifyForm($('#guest-form'));
+        var type = obj.guest_id > 0 ? 'PUT' : 'POST';
+        var url = obj.guest_id > 0 ? app.config.getApiUrl() + 'guests/' + obj.guest_id : app.config.getApiUrl() + 'guests/';
+        
+        if($('#guest-form').valid())
+        {
             $.ajax({
                 url: url,
                 type: type,
                 data: JSON.stringify(obj),
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
-                beforeSend: function (xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + app.utility.getToken()); },
-                success: function (response, status, jqXHR) {
-                    app.main.showMessage('success', (obj.room_rate_id > 0 ? 'Successfully edited room rate.' : 'Successfully added room rate.'));
-                    getRoomRates();
+                beforeSend: function(xhr){ xhr.setRequestHeader('Authorization', 'Bearer ' + app.utility.getToken());},
+                success: function(response, status, jqXHR) {  
+                    app.main.showMessage('success', (obj.guest_id > 0 ? 'Successfully edited guest.' : 'Successfully added guest.')); 
+                    getGuests();
                 },
-                error: function (response) {
-                    if (response.status == 401) {
+                error: function(response) {
+                    if(response.status == 401)
+                    {
                         app.utility.removeLoginData();
                         app.router.navigate('login');
                     }
                 },
-                complete: function () {
-                    $('#edit-room-rate-modal').modal('hide');
+                complete: function() {                
+                    $('#edit-guest-modal').modal('hide');
                     //app.main.showLoading(false);
                 }
             });
         }
     }
 
-    var openDeleteModal = function (id) {
-        app.main.showConfirmation('Deleting room rate', 'Are you sure that you want to delete selected room rate?', deleteRoomRate, id);
+    var openDeleteModal = function(id)
+    {
+        app.main.showConfirmation('Deleting guest', 'Are you sure that you want to delete selected guest?', deleteGuest, id);
     }
 
-    var deleteRoomRate = function (id) {
-        var url = app.config.getApiUrl() + 'roomrates/' + id;
+    var deleteGuest = function(id)
+    {
+        var url = app.config.getApiUrl() + 'guests/' + id;
 
         $.ajax({
             url: url,
             type: 'DELETE',
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            beforeSend: function (xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + app.utility.getToken()); },
-            success: function (response, status, jqXHR) {
-                app.main.showMessage('success', 'Successfully deleted room rate.');
-                getRoomRates();
+            beforeSend: function(xhr){ xhr.setRequestHeader('Authorization', 'Bearer ' + app.utility.getToken());},
+            success: function(response, status, jqXHR) {  
+                app.main.showMessage('success', 'Successfully deleted guest.'); 
+                getGuests();
             },
-            error: function (response) {
-                if (response.status == 401) {
+            error: function(response) {
+                if(response.status == 401)
+                {
                     app.utility.removeLoginData();
                     app.router.navigate('login');
                 }
             },
-            complete: function () {
+            complete: function() {                
                 //app.main.showLoading(false);
             }
         });
     }
 
-    var fillMealOptions = function (mealOptions) {
-        var html = '';
-
-        for (var i = 0; i < mealOptions.length; i++)
-            html += '<option value="' + mealOptions[i].meal_option_id + '">' + mealOptions[i].name + '</option>';
-
-        $('#meal_option_id').html(html);
-    }
-
-    var fillRooms = function (rooms) {
-        var html = '';
-
-        for (var i = 0; i < rooms.length; i++)
-            html += '<option value="' + rooms[i].room_id + '">' + rooms[i].name + '</option>';
-
-        $('#room_id').html(html);
-    }
-
-    var previousPage = function () {
+    var previousPage = function() {
         page = page - 1;
-        getRoomRates();
+        getGuests();
     }
 
-    var nextPage = function () {
+    var nextPage = function() {
         page = page + 1;
-        getRoomRates();
+        getGuests();
     }
 
-    var goToPage = function (number) {
+    var goToPage = function(number) {
         page = number;
-        getRoomRates();
+        getGuests();
     }
 
     return {
@@ -286,8 +267,8 @@ app.roomRates = function () {
         previousPage: previousPage,
         nextPage: nextPage,
         goToPage: goToPage,
-        editRoomRate: editRoomRate,
-        saveRoomRate: saveRoomRate,
+        editGuest: editGuest,
+        saveGuest: saveGuest,
         openDeleteModal: openDeleteModal
     }
 }();
