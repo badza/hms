@@ -9,10 +9,14 @@ require 'lib/auth.php';
 require 'lib/database.php';
 
 // Storage
+require 'storage/reservation.php';
 require 'storage/user.php';
 require 'storage/room.php';
 require 'storage/room_rate.php';
 require 'storage/guest.php';
+
+// Include guest module
+require 'modules/reservation.php';
 
 // Include auth module
 require 'modules/auth.php';

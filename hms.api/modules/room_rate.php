@@ -15,6 +15,21 @@ Flight::route('GET /roomrates', function(){
     Flight::halt(401, 'Unauthorized');
 });
 
+Flight::route('GET /roomrates/calculate', function(){
+    $auth = new Auth();
+    $room = new RoomRateStorage();
+    $request = Flight::request();  
+    $token_data = $auth->is_jwt_valid($auth->getBearerToken());
+
+    if($token_data[0])
+    {
+        $room_rates = $room->calculate_room_rate($request->query['room_id'], $request->query['meal_option_id'], $request->query['adult_count'], $request->query['days']);
+        Flight::halt(200, json_encode($room_rates));
+    }
+
+    Flight::halt(401, 'Unauthorized');
+});
+
 Flight::route('GET /roomrates/@id', function($id){
     $data = array();
     $auth = new Auth();

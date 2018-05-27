@@ -24,7 +24,7 @@ app.login = function() {
             dataType: 'json',
             success: function(response, status, jqXHR) {   
                 app.utility.setLoginData(response);             
-                app.router.navigate('/home');
+                app.router.navigate('/reservation');
             },
             error: function(response) {
                 if(response.status == 401)

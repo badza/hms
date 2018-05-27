@@ -15,8 +15,8 @@ app.main = function() {
         .add('login', function() {
             loadBody('views/login');
         })
-        .add('home', function() {
-            loadContent('views/home');
+        .add('reservation', function() {
+            loadContent('views/reservation');
         })
         .add('user', function() {
             loadContent('views/user');
@@ -43,7 +43,7 @@ app.main = function() {
             if(app.router.getFragment() && app.router.getFragment() != 'login')
                 app.router.navigate('/' + app.router.getFragment());
             else
-                app.router.navigate('/home');
+                app.router.navigate('/reservation');
         }        
     }
 

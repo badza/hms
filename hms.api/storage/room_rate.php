@@ -86,6 +86,16 @@ class RoomRateStorage
         $stmt->fetch();
     }
 
+    public function calculate_room_rate($room_id, $meal_option_id, $adult_count, $days)
+    {
+        $query = "";
+        $query .="SELECT price_per_adult FROM room_rate WHERE room_id = :room_id AND meal_option_id = :meal_option_id";
+        $stmt = $this->database->handler->prepare($query);
+        $stmt->execute(['room_id' => $room_id, 'meal_option_id' => $meal_option_id]);                
+        $data = $stmt->fetch();
+        return ($data['price_per_adult'] * $adult_count) * $days;
+    }
+
     public function get_rooms()
     {
         $query = "";
