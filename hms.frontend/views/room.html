@@ -1,1 +1,69 @@
-This is room html.
+<div class="row">
+    <div class="col-md-6">
+        <h1>
+            <i class="fas fa-door-closed"></i> Room Management</h1>
+    </div>
+    <div class="col-md-6">
+        <button onclick="app.room.editRoom(0)" class="btn btn-success float-right add" href="#">
+            <i class="fas fa-plus"></i> Add New Room</button>
+    </div>
+</div>
+
+<div id="room-data-placeholder" class="component-content-placeholder">
+
+</div>
+
+<div class="modal fade" id="edit-room-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="room-form">
+                    <input type="hidden" name="room_id" id="room_id">
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label" for="door_number">Door Number</label>
+                        <div class="col-9">
+                            <input id="door_number" name="door_number" placeholder="Door Number" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="room_category_id" class="col-3 col-form-label">Category</label>
+                        <div class="col-9">
+                            <select id="room_category_id" name="room_category_id" class="form-control">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="capacity_adults" class="col-3 col-form-label">Capacity Adults</label>
+                        <div class="col-9">
+                            <input id="capacity_adults" name="capacity_adults" placeholder="Capacity Adults" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="capacity_children" class="col-3 col-form-label">Capacity Children</label>
+                        <div class="col-9">
+                            <input id="capacity_children" name="capacity_children" placeholder="Capacity Children" type="text" class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fas fa-times"></i> Close</button>
+                <button type="button" class="btn btn-primary" onclick="app.room.saveRoom()">
+                    <i class="far fa-save"></i> Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="assets/js/app/components/room.js"></script>
+
+<script type="text/javascript">
+    app.room.init();
+</script>

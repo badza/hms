@@ -288,3 +288,8 @@ label.error
   color: #a30d0d;
   text-align: right;
 }
+
+.remove-width
+{
+  width: auto !important;
+}
