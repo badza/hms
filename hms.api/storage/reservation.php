@@ -11,7 +11,7 @@ class ReservationStorage
         $this->database = new Database();
     }
 
-    public function get_reservations($page, $search)
+    public function get_reservations($page, $search, $status)
     {
         $data = array();
 
@@ -30,17 +30,42 @@ class ReservationStorage
         $query .= "INNER JOIN room AS r on r.room_id = rr.room_id ";  
         
         if(!empty($search))        
-            $query .= "WHERE room_reservation_id LIKE @search OR g.firstname LIKE @search OR g.lastname LIKE @search ";
+            $query .= "WHERE (room_reservation_id LIKE @search OR g.firstname LIKE @search OR g.lastname LIKE @search) ";
+
+        if(empty($search))
+            $query .= "WHERE ";
+        else
+            $query .= "AND ";
+        
+        switch($status)
+        {
+            case 'upcoming':
+                $query .= "from_date >= NOW() AND (canceled <> 1 OR canceled IS NULL) ";
+            break;
+            case 'current':
+                $query .= "from_date <= NOW() AND to_date >= NOW() AND (canceled <> 1 OR canceled IS NULL) ";
+            break;
+            case 'past': 
+                $query .= "to_date <= NOW() AND (canceled <> 1 OR canceled IS NULL) ";
+            break;
+            case 'never-checked-in':
+                $query .= "checked_in IS NULL AND (canceled <> 1 OR canceled IS NULL) ";
+            break;
+            case 'canceled':
+                $query .= "canceled = 1 ";
+            break;
+        }   
+        
+        // Getting row count and pages, for paging. A bit ugly, because we trigger query for everything
+        // Need to be resolved later in more beautiful manner
+        $page_size = $this->config['page_size'];
+        $stmt_row_count = $this->database->handler->prepare($query);
+        $stmt_row_count->execute();
+        $row_count = $stmt_row_count->rowCount();
+        $page_count = ceil($row_count/$page_size);
 
         $query .= "ORDER BY from_date DESC ";
-        $query .= "LIMIT :starting_limit, :page_size";
-        $page_size = $this->config['page_size'];
-
-        // Getting row count and pages, for paging
-        $stmt_row_count = $this->database->handler->prepare("SELECT COUNT(*) FROM room_reservation");
-        $stmt_row_count->execute();
-        $row_count = $stmt_row_count->fetchColumn();
-        $page_count = ceil($row_count/$page_size);
+        $query .= "LIMIT :starting_limit, :page_size"; 
 
         $starting_limit = ($page - 1) * $page_size;
         $stmt = $this->database->handler->prepare($query);

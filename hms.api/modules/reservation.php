@@ -8,7 +8,7 @@ Flight::route('GET /reservations', function(){
 
     if($token_data[0])
     {
-        $reservations = $reservation->get_reservations($request->query['page'], $request->query['searchStr']);
+        $reservations = $reservation->get_reservations($request->query['page'], $request->query['searchStr'], $request->query['status']);
         Flight::halt(200, json_encode($reservations));
     }
 

@@ -2,6 +2,7 @@ var app = app || {};
 
 app.reservations = function () {
     var searchStr = '';
+    var status = 'upcoming';
     var page = 1;
     var from;
     var to;
@@ -41,6 +42,11 @@ app.reservations = function () {
             
         $('#room_id, #meal_option_id, #adult_count').on('change', function() {
             calculateRoomRate();
+        });
+
+        $('#status').on('change', function() {
+            status = $(this).val();
+            getReservations();
         });
 
         var searchTimeout;
@@ -94,13 +100,13 @@ app.reservations = function () {
         var html = '';
 
         $.ajax({
-            url: app.config.getApiUrl() + 'reservations?page=' + page + '&searchStr=' + searchStr,
+            url: app.config.getApiUrl() + 'reservations?page=' + page + '&searchStr=' + searchStr + '&status=' + status,
             type: 'GET',
             dataType: 'json',
             beforeSend: function (xhr) { xhr.setRequestHeader('Authorization', 'Bearer ' + app.utility.getToken()); },
             success: function (response, status, jqXHR) {
                 html += buildTableHtml(response.data);
-                //html += buildPaginationHtml(response.page_count);
+                html += buildPaginationHtml(response.page_count);
                 $('#reservation-data-placeholder').html(html);
             },
             error: function (response) {
@@ -198,6 +204,31 @@ app.reservations = function () {
         html += '</tbody>'
 
         html += '</table>';
+
+        return html;
+    }
+
+    var buildPaginationHtml = function (pageCount) {
+        var html = '';
+        html += '<nav>';
+        html += '<ul class="pagination">';
+
+        html += '<li class="page-item ' + (page == 1 ? 'disabled' : '') + '">';
+        html += '<button class="page-link previous-page" onclick="app.reservations.previousPage()">Previous</button>';
+        html += '</li>';
+
+        for (var i = 0; i < pageCount; i++) {
+            html += '<li class="page-item ' + (page == i + 1 ? 'active' : '') + '">';
+            html += '<button class="page-link page" onclick="app.reservations.goToPage(' + (i + 1) + ')">' + (i + 1) + '</button>';
+            html += '</li>';
+        }
+
+        html += '<li class="page-item ' + (page == pageCount ? 'disabled' : '') + '">';
+        html += '<button class="page-link next-page" onclick="app.reservations.nextPage()">Next</button>';
+        html += '</li>';
+
+        html += '</ul>';
+        html += '</nav>';
 
         return html;
     }
@@ -406,12 +437,30 @@ app.reservations = function () {
         $('#meal_option_id').html(html);
     }
 
+    var previousPage = function() {
+        page = page - 1;
+        getReservations();
+    }
+
+    var nextPage = function() {
+        page = page + 1;
+        getReservations();
+    }
+
+    var goToPage = function(number) {
+        page = number;
+        getReservations();
+    }
+
     return {
         init: init,
         editReservation: editReservation,
         saveReservation: saveReservation,
         cancelReservationConfirmation: cancelReservationConfirmation,
         checkInConfirmation: checkInConfirmation,
-        checkOutConfirmation: checkOutConfirmation
+        checkOutConfirmation: checkOutConfirmation,
+        previousPage: previousPage,
+        nextPage: nextPage,
+        goToPage: goToPage
     }
 }();
