@@ -106,13 +106,37 @@ app.main = function() {
     var reinitContent = function() {
         contentEl = $('#content');
     }
-    
-    var navigateTo = function(routeValue) {
 
+    var showMessage = function(type, message)
+    {
+        $('#message').attr('class', '');
+        $('#message').addClass('custom-message')        
+
+        if(type=='success')        
+            $('#message').addClass('alert alert-success');        
+
+        $('#message').html(message);
+        $('#message').fadeIn(200);
+        setTimeout(function() { $("#message").fadeOut(200); }, 3000);
+    }
+
+    var showConfirmation = function(title, message, callback, id)
+    {
+        $('#confirmation-modal .modal-title').html(title);
+        $('#confirmation-modal .modal-body').html(message);
+        $('#confirmation-modal').modal('show');
+
+        $('.confirm').on('click', function() {
+            callback(id);
+            $('#confirmation-modal').modal('hide');
+        });
     }
 
     return {
         init: init,
-        loadBody: loadBody
+        loadBody: loadBody,
+        showLoading: showLoading,
+        showMessage: showMessage,
+        showConfirmation: showConfirmation
     }
 }();

@@ -235,3 +235,56 @@ APP
   background-size: cover;
 }
 
+#content
+{
+  width: 100%;
+}
+
+.table td
+{
+  vertical-align: middle;
+}
+
+#content h1
+{
+  font-size: 22px;
+  padding-bottom: 15px;
+}
+
+.component-content-placeholder
+{
+  width: 100%;
+}
+
+.actions-column
+{
+  width: 390px;
+}
+
+.actions-column button
+{
+  margin-right: 10px;
+  text-transform: uppercase;
+}
+
+.custom-message
+{
+  width: 250px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  border-radius: 0;
+}
+
+input.error
+{
+  border: 2px solid #a30d0d;
+}
+
+label.error
+{
+  width: 100%;
+  color: #a30d0d;
+  text-align: right;
+}
