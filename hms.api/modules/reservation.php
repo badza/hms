@@ -5,7 +5,7 @@ Flight::route('GET /reservations', function(){
     $reservation = new ReservationStorage();
     $request = Flight::request();  
     $token_data = $auth->is_jwt_valid($auth->getBearerToken());
-
+    
     if($token_data[0])
     {
         $reservations = $reservation->get_reservations($request->query['page'], $request->query['searchStr'], $request->query['status']);

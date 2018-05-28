@@ -23,7 +23,7 @@ app.login = function() {
             data: requestObj,
             dataType: 'json',
             success: function(response, status, jqXHR) {   
-                app.utility.setLoginData(response);             
+                app.utility.setLoginData(response);            
                 app.router.navigate('/reservation');
             },
             error: function(response) {

@@ -77,7 +77,7 @@ class UserStorage
         $query .= "(:firstname, :lastname, :username, 'test', :email, :role_id)";
         $stmt = $this->database->handler->prepare($query);
         $stmt->execute($data);
-        $stmt->fetch();
+        //$stmt->fetch();
         return $this->database->handler->lastInsertId();
     }
 
@@ -97,7 +97,7 @@ class UserStorage
         
         $stmt = $this->database->handler->prepare($query);
         $stmt->execute($data);
-        $stmt->fetch();
+        //$stmt->fetch();
     }
 
     public function update_user_password($id, $data)
@@ -113,14 +113,14 @@ class UserStorage
         $query .= "WHERE user_id =:user_id"; 
         $stmt = $this->database->handler->prepare($query);
         $stmt->execute($data);
-        $stmt->fetch();
+        //$stmt->fetch();
     }
 
     public function delete_user($id)
     {
         $stmt = $this->database->handler->prepare('DELETE FROM user WHERE user_id = :id');
         $stmt->execute(['id' => $id]);                
-        $stmt->fetch();
+        //$stmt->fetch();
     }
 
     public function get_roles()

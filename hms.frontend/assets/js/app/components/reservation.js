@@ -104,7 +104,7 @@ app.reservations = function () {
 
     var getReservations = function () {
         var html = '';
-
+        
         $.ajax({
             url: app.config.getApiUrl() + 'reservations?page=' + page + '&searchStr=' + searchStr + '&status=' + status,
             type: 'GET',

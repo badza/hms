@@ -54,7 +54,7 @@ class GuestStorage
         $query .= "(:firstname, :lastname, :address, :city, :phone_no, :email)";
         $stmt = $this->database->handler->prepare($query);
         $stmt->execute($data);
-        $stmt->fetch();
+        //$stmt->fetch();
         return $this->database->handler->lastInsertId();
     }
 
@@ -73,13 +73,13 @@ class GuestStorage
         
         $stmt = $this->database->handler->prepare($query);
         $stmt->execute($data);
-        $stmt->fetch();
+        //$stmt->fetch();
     }
 
     public function delete_guest($id)
     {
         $stmt = $this->database->handler->prepare('DELETE FROM guest WHERE guest_id = :id');
         $stmt->execute(['id' => $id]);                
-        $stmt->fetch();
+        //$stmt->fetch();
     }
 }

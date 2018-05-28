@@ -60,7 +60,7 @@ class RoomRateStorage
         $query .= "(:room_id, :meal_option_id, :price_per_adult)";
         $stmt = $this->database->handler->prepare($query);
         $stmt->execute($data);
-        $stmt->fetch();
+        //$stmt->fetch();
         return $this->database->handler->lastInsertId();
     }
 
@@ -76,14 +76,14 @@ class RoomRateStorage
         
         $stmt = $this->database->handler->prepare($query);
         $stmt->execute($data);
-        $stmt->fetch();
+        //$stmt->fetch();
     }
 
     public function delete_room_rate($id)
     {
         $stmt = $this->database->handler->prepare('DELETE FROM room_rate WHERE room_rate_id = :id');
         $stmt->execute(['id' => $id]);                
-        $stmt->fetch();
+        //$stmt->fetch();
     }
 
     public function calculate_room_rate($room_id, $meal_option_id, $adult_count, $days)

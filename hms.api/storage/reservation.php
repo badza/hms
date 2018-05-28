@@ -113,7 +113,7 @@ class ReservationStorage
         $query .= "(:room_id, :meal_option_id, :guest_id, :from_date, :to_date, :adult_count, :calculated_price)";
         $stmt = $this->database->handler->prepare($query);
         $stmt->execute($data);
-        $stmt->fetch();
+        //$stmt->fetch();
         return $this->database->handler->lastInsertId();
     }
 
@@ -142,35 +142,35 @@ class ReservationStorage
         
         $stmt = $this->database->handler->prepare($query);
         $stmt->execute($data);
-        $stmt->fetch();
+        //$stmt->fetch();
     }
 
     public function cancel_reservation($id)
     {
         $stmt = $this->database->handler->prepare("UPDATE room_reservation SET canceled = 1 WHERE room_reservation_id = :id");
         $stmt->execute(['id' => $id]);
-        $stmt->fetch();
+        //$stmt->fetch();
     }
 
     public function check_in($id)
     {
         $stmt = $this->database->handler->prepare("UPDATE room_reservation SET checked_in = NOW() WHERE room_reservation_id = :id");
         $stmt->execute(['id' => $id]);
-        $stmt->fetch();
+        //$stmt->fetch();
     }
 
     public function check_out($id)
     {
         $stmt = $this->database->handler->prepare("UPDATE room_reservation SET checked_out = NOW() WHERE room_reservation_id = :id");
         $stmt->execute(['id' => $id]);
-        $stmt->fetch();
+        //$stmt->fetch();
     }
 
     public function delete_guest($id)
     {
         $stmt = $this->database->handler->prepare('DELETE FROM guest WHERE guest_id = :id');
         $stmt->execute(['id' => $id]);                
-        $stmt->fetch();
+        //$stmt->fetch();
     }
 
     public function get_guests()

@@ -57,7 +57,7 @@ class RoomStorage
         $query .= "(:door_number, :room_category_id, :capacity_adults, :capacity_children)";
         $stmt = $this->database->handler->prepare($query);
         $stmt->execute($data);
-        $stmt->fetch();
+        //$stmt->fetch();
         return $this->database->handler->lastInsertId();
     }
 
@@ -74,14 +74,14 @@ class RoomStorage
         
         $stmt = $this->database->handler->prepare($query);
         $stmt->execute($data);
-        $stmt->fetch();
+        //$stmt->fetch();
     }
 
     public function delete_room($id)
     {
         $stmt = $this->database->handler->prepare('DELETE FROM room WHERE room_id = :id');
         $stmt->execute(['id' => $id]);                
-        $stmt->fetch();
+        //$stmt->fetch();
     }
 
     public function get_room_categories()
