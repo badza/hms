@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2018 at 01:05 AM
+-- Generation Time: May 28, 2018 at 06:59 AM
 -- Server version: 5.7.14
 -- PHP Version: 7.0.10
 
@@ -39,7 +39,18 @@ CREATE TABLE `guest` (
   `city` varchar(255) DEFAULT NULL,
   `phone_no` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `points` int(11) NOT NULL
+  `points` int(11) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `meal_option`
+--
+
+CREATE TABLE `meal_option` (
+  `meal_option_id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -82,6 +93,40 @@ CREATE TABLE `room_category` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `room_rate`
+--
+
+CREATE TABLE `room_rate` (
+  `room_rate_id` int(11) NOT NULL,
+  `room_id` int(11) NOT NULL,
+  `meal_option_id` int(11) DEFAULT NULL,
+  `price_per_adult` decimal(10,2) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `room_reservation`
+--
+
+CREATE TABLE `room_reservation` (
+  `room_reservation_id` int(11) NOT NULL,
+  `room_id` int(11) DEFAULT NULL,
+  `meal_option_id` int(11) DEFAULT NULL,
+  `guest_id` int(11) DEFAULT NULL,
+  `from_date` date DEFAULT NULL,
+  `to_date` date DEFAULT NULL,
+  `adult_count` int(11) DEFAULT NULL,
+  `checked_in` datetime DEFAULT NULL,
+  `checked_out` datetime DEFAULT NULL,
+  `canceled` tinyint(1) DEFAULT NULL,
+  `checked` tinyint(1) DEFAULT NULL,
+  `calculated_price` decimal(10,2) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -110,6 +155,12 @@ ALTER TABLE `guest`
   ADD PRIMARY KEY (`guest_id`);
 
 --
+-- Indexes for table `meal_option`
+--
+ALTER TABLE `meal_option`
+  ADD PRIMARY KEY (`meal_option_id`);
+
+--
 -- Indexes for table `role`
 --
 ALTER TABLE `role`
@@ -128,6 +179,18 @@ ALTER TABLE `room_category`
   ADD PRIMARY KEY (`room_category_id`);
 
 --
+-- Indexes for table `room_rate`
+--
+ALTER TABLE `room_rate`
+  ADD PRIMARY KEY (`room_rate_id`);
+
+--
+-- Indexes for table `room_reservation`
+--
+ALTER TABLE `room_reservation`
+  ADD PRIMARY KEY (`room_reservation_id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -141,7 +204,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `guest`
 --
 ALTER TABLE `guest`
-  MODIFY `guest_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `guest_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `meal_option`
+--
+ALTER TABLE `meal_option`
+  MODIFY `meal_option_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `role`
 --
@@ -157,6 +225,16 @@ ALTER TABLE `room`
 --
 ALTER TABLE `room_category`
   MODIFY `room_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `room_rate`
+--
+ALTER TABLE `room_rate`
+  MODIFY `room_rate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `room_reservation`
+--
+ALTER TABLE `room_reservation`
+  MODIFY `room_reservation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `user`
 --

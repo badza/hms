@@ -19,14 +19,14 @@ body, html {
   left: 0;
   z-index: 100; /* Behind the navbar */
   padding: 48px 0 0; /* Height of navbar */
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  background: #2F3A4C;
 }
 
 .sidebar-sticky {
   position: relative;
   top: 0;
   height: calc(100vh - 48px);
-  padding-top: .5rem;
+  padding-top: .9rem;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
@@ -40,7 +40,24 @@ body, html {
 
 .sidebar .nav-link {
   font-weight: 500;
-  color: #333;
+  color: #FFF;
+  font-size: 14px;
+}
+
+.sidebar .nav-link .fas
+{
+  min-width: 20px;
+  text-align: center;
+  margin-right: 15px;
+  margin-left: 15px;
+}
+
+.sidebar .nav-link .far
+{
+  min-width: 20px;
+  text-align: center;
+  margin-right: 15px;
+  margin-left: 15px;
 }
 
 .sidebar .nav-link .feather {
@@ -67,7 +84,7 @@ body, html {
   */
 
 [role="main"] {
-  padding-top: 48px; /* Space for fixed navbar */
+  padding-top: 55px; /* Space for fixed navbar */
 }
 
 /*
@@ -78,8 +95,7 @@ body, html {
   padding-top: .75rem;
   padding-bottom: .75rem;
   font-size: 1rem;
-  background-color: rgba(0, 0, 0, .25);
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+  color: #FFF;
 }
 
 .navbar .form-control {
@@ -235,6 +251,18 @@ APP
   background-size: cover;
 }
 
+#login-logo
+{
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+#login-logo img
+{
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #content
 {
   width: 100%;
@@ -304,4 +332,21 @@ label.error
 {
   background: #FFF;
   border-bottom: 2px solid #666;
+}
+
+.navbar-hms
+{
+  background: #FFF;
+}
+
+.navbar-hms .navbar-brand img
+{
+  width: 80px;
+  margin-left: 15px;
+}
+
+.navbar-hms a
+{
+  color: #000;
+  font-weight: bold;
 }
