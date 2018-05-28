@@ -200,10 +200,10 @@ app.reservations = function () {
             html += data[i].checked_out ? data[i].checked_out : '';
             html += '</td>';
             html += '<td class="actions-column" style="width: 450px;">';
-            html += '<button class="btn btn-secondary" onclick="app.reservations.editReservation(' + data[i].room_reservation_id + ')" href="#"><i class="fas fa-pencil-alt"></i> Edit</button>';            
-            html += '<button class="btn btn-danger" onclick="app.reservations.cancelReservationConfirmation(' + data[i].room_reservation_id + ')"><i class="fas fa-ban"></i> Cancel</button>';
-            html += '<button class="btn btn-primary" onclick="app.reservations.checkInConfirmation(' + data[i].room_reservation_id + ')"><i class="fas fa-user-check"></i> Check-In</button>';
-            html += '<button class="btn btn-primary" onclick="app.reservations.checkOutConfirmation(' + data[i].room_reservation_id + ')"><i class="fas fa-sign-out-alt"></i> Check-Out</button>';
+            html += '<button class="btn btn-secondary" ' + (data[i].checked_out || data[i].canceled ? 'disabled' : '') + ' onclick="app.reservations.editReservation(' + data[i].room_reservation_id + ')" href="#"><i class="fas fa-pencil-alt"></i> Edit</button>';            
+            html += '<button class="btn btn-danger" ' + (data[i].checked_in || data[i].canceled ? 'disabled' : '') + ' onclick="app.reservations.cancelReservationConfirmation(' + data[i].room_reservation_id + ')"><i class="fas fa-ban"></i> Cancel</button>';
+            html += '<button class="btn btn-primary" ' + (data[i].canceled ? 'disabled' : '') + ' onclick="app.reservations.checkInConfirmation(' + data[i].room_reservation_id + ')"><i class="fas fa-user-check"></i> Check-In</button>';
+            html += '<button class="btn btn-primary" ' + (!data[i].checked_in ? 'disabled' : '') + ' onclick="app.reservations.checkOutConfirmation(' + data[i].room_reservation_id + ')"><i class="fas fa-sign-out-alt"></i> Check-Out</button>';
             html += '</td>';
             html += '</tr>';
         }
