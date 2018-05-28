@@ -4,18 +4,24 @@ app.roomRates = function () {
     var page = 1;
 
     var init = function () {
-        /*$('#room-rate-form').validate({
+        $('#room-rate-form').validate({
             rules: {
-                door_number: 'required',
-                capacity_adults: 'required',
-                capacity_children: 'required'
+                room_id: 'required',
+                meal_option_id: 'required',
+                price_per_adult: {
+                    required: true,
+                    number: true
+                }
             },
             messages: {
-                door_number: 'Door Number is required.',
-                capacity_adults: 'Capacity Adults is required.',
-                capacity_children: 'Capacity Adults is required.'
+                room_id: 'Room is required.',
+                meal_option_id: 'Meal is required.',
+                price_per_adult: {
+                    required: 'Price is required.',
+                    number: 'Invalid number'
+                }
             }
-        });*/
+        });
 
         getRoomRates();
     }

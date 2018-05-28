@@ -8,18 +8,24 @@ app.reservations = function () {
     var to;
 
     var init = function () {
-        /*$('#room-form').validate({
+        $('#reservation-form').validate({
             rules: {
-                door_number: 'required',
-                capacity_adults: 'required',
-                capacity_children: 'required'
+                room_id: 'required',
+                meal_option_id: 'required',
+                guest_id: 'required',
+                from_date: 'required',
+                to_date: 'required',
+                adult_count: 'required'
             },
             messages: {
-                door_number: 'Door Number is required.',
-                capacity_adults: 'Capacity Adults is required.',
-                capacity_children: 'Capacity Adults is required.'
+                room_id: 'Room is required.',
+                meal_option_id: 'Meal is required.',
+                guest_id: 'Guest is required.',
+                from_date: 'From is required.',
+                to_date: 'To is required.',
+                adult_count: 'Adult count is required.'
             }
-        });*/
+        });
 
         from = $("#from_date").datepicker({
                 defaultDate: "+1w",

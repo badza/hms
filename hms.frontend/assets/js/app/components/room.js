@@ -7,13 +7,27 @@ app.room = function () {
         $('#room-form').validate({
             rules: {
                 door_number: 'required',
-                capacity_adults: 'required',
-                capacity_children: 'required'
+                room_category_id: 'required',
+                capacity_adults: {
+                    required: true,
+                    number: true
+                },
+                capacity_children: {
+                    required: true,
+                    number: true
+                }
             },
             messages: {
                 door_number: 'Door Number is required.',
-                capacity_adults: 'Capacity Adults is required.',
-                capacity_children: 'Capacity Adults is required.'
+                room_category_id: 'Room Category is required.',
+                capacity_adults: {
+                    required: 'Capacity Adults is required.',
+                    number: 'Invalid number'
+                },
+                capacity_children: {
+                    required: 'Capacity Children is required.',
+                    number: 'Invalid number'
+                }
             }
         });
 

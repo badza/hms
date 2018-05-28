@@ -4,18 +4,24 @@ app.guest = function () {
     var page = 1;
 
     var init = function () {
-        /*$('#room-form').validate({
+        $('#guest-form').validate({
             rules: {
-                door_number: 'required',
-                capacity_adults: 'required',
-                capacity_children: 'required'
+                firstname: 'required',
+                lastname: 'required',
+                email: {
+                    required: true,
+                    email: true
+                }
             },
             messages: {
-                door_number: 'Door Number is required.',
-                capacity_adults: 'Capacity Adults is required.',
-                capacity_children: 'Capacity Adults is required.'
+                firstname: 'First Name is required.',
+                lastname: 'Last Name is required.',
+                email: {
+                    required: 'Email is required',
+                    email: 'Invalid email address'
+                }
             }
-        });*/
+        });
 
         getGuests();
     }

@@ -24,6 +24,13 @@ app.utility = function() {
             return JSON.parse(userData).token;
     }
 
+    var getUserFullname = function() {
+        var userData = localStorage.getItem('user-data');
+        
+        if(userData)
+            return JSON.parse(userData).fullname;
+    }
+
     var clearForm = function(form) {
         form.find('input, textarea, select').each(function() {            
             $(this).val('');
@@ -53,6 +60,7 @@ app.utility = function() {
         getToken: getToken,
         objectifyForm: objectifyForm,
         formalizeObject: formalizeObject,
-        clearForm: clearForm
+        clearForm: clearForm,
+        getUserFullname: getUserFullname
     }
 }();

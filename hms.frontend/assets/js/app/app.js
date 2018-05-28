@@ -88,6 +88,7 @@ app.main = function() {
                 reinitLinks();
                 reinitContent();
                 setLinkActive(app.router.getFragment());
+                setName(app.utility.getUserFullname());
                 showLoading(false);                            
             }
         });
@@ -155,6 +156,10 @@ app.main = function() {
         var liTopRightMenuHtml = $('.top-right-menu').html();
         var htmlElements = liElementsHtml + liTopRightMenuHtml;       
         $('#mobile-main-menu .nav').html(htmlElements);
+    }
+
+    var setName = function(val) {
+        $('.user-fullname').html(val);
     }
 
     var signOut = function() {
