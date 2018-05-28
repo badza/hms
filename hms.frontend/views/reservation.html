@@ -1,5 +1,11 @@
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
+        <h1>
+            <i class="fas fa-flag-checkered"></i> Reservations</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-7">
         <div class="input-group mb-3">
             <input type="text" id="search-reservation" class="form-control" placeholder="Search by reservation number or guest name">
         </div>
@@ -13,8 +19,8 @@
             <option value="canceled">Canceled</option>
         </select>
     </div>
-    <div class="col-md-4">
-        <button onclick="app.reservations.editReservation(0)" class="btn btn-success float-right add">
+    <div class="col-md-3">
+        <button onclick="app.reservations.editReservation(0)" class="btn btn-success add btn-block move-from-top">
             <i class="fas fa-plus"></i> Add New Reservation</button>
     </div>
 </div>

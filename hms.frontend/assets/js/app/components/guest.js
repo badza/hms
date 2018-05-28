@@ -68,7 +68,7 @@ app.guest = function () {
 
     var buildTableHtml = function (data) {
         var html = '';
-        html += '<table class="table table-striped">';
+        html += '<table class="table table-striped table-responsive w-100 d-block d-md-table">';
 
         html += '<thead class="thead-dark">';
         html += '<tr>';

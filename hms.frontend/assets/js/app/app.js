@@ -33,7 +33,7 @@ app.main = function() {
         .listen();
         
         // This is only for initial load
-        app.router.check(app.router.getFragment());
+        app.router.check(app.router.getFragment());        
 
         // If user is not logged in, redirect to login
         if(!app.utility.isUserLoggedIn())        
@@ -44,7 +44,7 @@ app.main = function() {
                 app.router.navigate('/' + app.router.getFragment());
             else
                 app.router.navigate('/reservation');
-        }        
+        }               
     }
 
     var loadBody = function(viewName, initLoading) {
@@ -69,6 +69,7 @@ app.main = function() {
         if(contentEl.length === 0){
             $.when(loadBody('views/layout', true)).done(function(){
                 loadContentWithoutLayout(viewName);
+                createMobileMainMenu();
             });          
         }
         else
@@ -86,6 +87,7 @@ app.main = function() {
                 contentEl.html(response);
                 reinitLinks();
                 reinitContent();
+                setLinkActive(app.router.getFragment());
                 showLoading(false);                            
             }
         });
@@ -103,10 +105,19 @@ app.main = function() {
             if($(this).data('navigate'))
             {
                 e.preventDefault();                
-                var navigateTo = $(this).data('navigate');
-                console.log(navigateTo);
+                var navigateTo = $(this).data('navigate');                
                 app.router.navigate('/' + navigateTo);
             }
+        });
+    }
+
+    var setLinkActive = function(navigate)
+    {        
+        $('.sidebar-sticky li a').each(function() {
+            if($(this).data('navigate') == navigate)
+                $(this).addClass('active');
+            else
+                $(this).removeClass('active');
         });
     }
 
@@ -139,11 +150,25 @@ app.main = function() {
         });
     }
 
+    var createMobileMainMenu = function() {
+        var liElementsHtml = $('.main-menu').html();
+        var liTopRightMenuHtml = $('.top-right-menu').html();
+        var htmlElements = liElementsHtml + liTopRightMenuHtml;       
+        $('#mobile-main-menu .nav').html(htmlElements);
+    }
+
+    var signOut = function() {
+        localStorage.removeItem('user-data');
+        app.router.navigate('/login');
+        app.router.check(app.router.getFragment()); 
+    }
+
     return {
         init: init,
         loadBody: loadBody,
         showLoading: showLoading,
         showMessage: showMessage,
-        showConfirmation: showConfirmation
+        showConfirmation: showConfirmation,
+        signOut: signOut
     }
 }();

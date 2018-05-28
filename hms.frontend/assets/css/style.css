@@ -38,10 +38,41 @@ body, html {
   }
 }
 
+.navbar-toggler
+{
+  float: right;
+  padding-top: 17px;
+  padding-bottom: 15px;
+}
+
+.top-right-menu
+{
+  float: right;
+  padding-top: 10px;
+}
+
+#mobile-main-menu .nav-item .nav-link
+{
+  padding: 10px;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.user-info
+{
+  float: right;
+  padding-top: 17px;
+}
+
 .sidebar .nav-link {
   font-weight: 500;
   color: #FFF;
   font-size: 14px;
+}
+
+.sidebar .nav-link.active {
+  border-left: 3px solid #007bff;
+  background: #3d4c66;
 }
 
 .sidebar .nav-link .fas
@@ -52,12 +83,22 @@ body, html {
   margin-left: 15px;
 }
 
+.sidebar .nav-link.active .fas
+{
+  margin-left: 12px;
+}
+
 .sidebar .nav-link .far
 {
   min-width: 20px;
   text-align: center;
   margin-right: 15px;
   margin-left: 15px;
+}
+
+.sidebar .nav-link.active .far
+{
+  margin-left: 12px;
 }
 
 .sidebar .nav-link .feather {
@@ -322,6 +363,11 @@ label.error
   width: auto !important;
 }
 
+.move-from-top
+{
+  margin-top: 10px;
+}
+
 .table .subheader
 {
   font-size: 12px;
@@ -337,6 +383,7 @@ label.error
 .navbar-hms
 {
   background: #FFF;
+  display: block;
 }
 
 .navbar-hms .navbar-brand img

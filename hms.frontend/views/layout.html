@@ -1,49 +1,57 @@
 <nav class="navbar navbar-hms fixed-top flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">
+    <a class="navbar-brand" href="#">
         <img src="assets/img/hms-navbar-logo.png" />
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
-        aria-label="Toggle navigation">
+    <button class="navbar-toggler d-sm-none" type="button" data-toggle="collapse" data-target="#mobile-main-menu" aria-controls="navbarCollapse"
+        aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars"></i>
     </button>
-    <ul class="navbar-nav px-3">
+    <div id="mobile-main-menu" aria-expanded="false" class="navbar-collapse collapse d-sm-none">
+        <ul class="nav navbar-nav">
+
+        </ul>
+    </div>    
+    <ul class="navbar-nav top-right-menu px-3 d-none d-lg-block">
         <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">Sign out</a>
+            <a class="nav-link" onclick="app.main.signOut()" href="#">Sign out</a>
         </li>
     </ul>
+    <div class="user-info d-none d-lg-block">
+            Hello, <span class="user-fullname">Jasmin</span>
+        </div>
 </nav>
 
 <div class="container-fluid">
     <div class="row">
-        <nav class="col-md-2 d-none d-md-block sidebar"  id="navbarCollapse">
+        <nav class="col-md-2 d-none d-md-block sidebar" id="navbarCollapse">
             <div class="sidebar-sticky">
-                <ul class="nav flex-column">
+                <ul class="nav flex-column main-menu">
                     <li class="nav-item">
-                        <a class="nav-link" href="#/reservation" data-navigate="reservation">
+                        <a class="nav-link" data-toggle="collapse" data-target="#mobile-main-menu" href="#/reservation" data-navigate="reservation">
                             <i class="fas fa-flag-checkered"></i>
                             Reservations
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#/user" data-navigate="user">
+                        <a class="nav-link" data-toggle="collapse" data-target="#mobile-main-menu" href="#/user" data-navigate="user">
                             <i class="fas fa-users"></i>
                             Users
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#/room" data-navigate="room">
+                        <a class="nav-link" data-toggle="collapse" data-target="#mobile-main-menu" href="#/room" data-navigate="room">
                             <i class="fas fa-door-closed"></i>
                             Rooms
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#/roomrate" data-navigate="roomrate">
+                        <a class="nav-link" data-toggle="collapse" data-target="#mobile-main-menu" href="#/roomrate" data-navigate="roomrate">
                             <i class="fas fa-dollar-sign"></i>
                             Room Rates
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#/guest" data-navigate="guest">
+                        <a class="nav-link" data-toggle="collapse" data-target="#mobile-main-menu" href="#/guest" data-navigate="guest">
                             <i class="far fa-user"></i>
                             Guests
                         </a>
